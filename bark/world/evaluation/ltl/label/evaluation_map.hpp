@@ -24,6 +24,7 @@ class EvaluationMap {
   std::optional<bool> operator[](const Label& label) {
     return GetValue(label);
   };
+  const std::unordered_map<Label, bool, LabelHash>& GetValues() const;
   bool SetValue(const Label& label, bool value);
   void SetWorld(const ObservedWorld* world);
   void Clear();

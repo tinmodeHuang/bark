@@ -39,6 +39,10 @@ void EvaluationMap::SetWorld(const ObservedWorld* world) {
   Clear();
 }
 void EvaluationMap::Clear() { values_.clear(); }
+const std::unordered_map<Label, bool, LabelHash>& EvaluationMap::GetValues()
+    const {
+  return values_;
+}
 }  // namespace evaluation
 }  // namespace world
 }  // namespace bark
