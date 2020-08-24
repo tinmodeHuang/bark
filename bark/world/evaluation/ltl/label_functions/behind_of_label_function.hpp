@@ -6,15 +6,15 @@
 #ifndef BARK_WORLD_EVALUATION_LTL_LABELS_BEHIND_OF_LABEL_FUNCTION_HPP_
 #define BARK_WORLD_EVALUATION_LTL_LABELS_BEHIND_OF_LABEL_FUNCTION_HPP_
 
-#include "bark/world/evaluation/ltl/label_functions/multi_agent_label_function.hpp"
+#include "bark/world/evaluation/ltl/label_functions/base_label_function.hpp"
 #include "bark/world/objects/object.hpp"
 
 namespace bark {
 namespace world {
 namespace evaluation {
 
-class BehindOfLabelFunction : public MultiAgentLabelFunction {
-  using MultiAgentLabelFunction::MultiAgentLabelFunction;
+class BehindOfLabelFunction : public BaseLabelFunction{
+  using BaseLabelFunction::BaseLabelFunction;
   bool EvaluateAgent(const world::ObservedWorld& observed_world,
                      const AgentPtr& other_agent) const override;
 };

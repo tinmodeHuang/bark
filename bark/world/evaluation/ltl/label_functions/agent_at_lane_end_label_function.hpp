@@ -8,14 +8,14 @@
 
 #include <string>
 
-#include "bark/world/evaluation/ltl/label_functions/multi_agent_label_function.hpp"
+#include "bark/world/evaluation/ltl/label_functions/base_label_function.hpp"
 #include "bark/world/objects/object.hpp"
 
 namespace bark {
 namespace world {
 namespace evaluation {
 
-class AgentAtLaneEndLabelFunction : public MultiAgentLabelFunction {
+class AgentAtLaneEndLabelFunction : public BaseLabelFunction {
  public:
   AgentAtLaneEndLabelFunction(const std::string& string,
                               const double distance_thres = 50.0);

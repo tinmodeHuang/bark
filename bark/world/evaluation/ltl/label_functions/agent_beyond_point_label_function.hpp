@@ -11,7 +11,7 @@
 
 #include <string>
 
-#include "bark/world/evaluation/ltl/label_functions/multi_agent_label_function.hpp"
+#include "bark/world/evaluation/ltl/label_functions/base_label_function.hpp"
 #include "bark/world/objects/object.hpp"
 #include "bark/world/opendrive/commons.hpp"
 
@@ -20,7 +20,7 @@ namespace world {
 namespace evaluation {
 using geometry::Point2d;
 using opendrive::XodrLaneId;
-class AgentBeyondPointLabelFunction : public MultiAgentLabelFunction {
+class AgentBeyondPointLabelFunction : public BaseLabelFunction {
  public:
   AgentBeyondPointLabelFunction(const std::string& string,
                                 Point2d beyond_point);

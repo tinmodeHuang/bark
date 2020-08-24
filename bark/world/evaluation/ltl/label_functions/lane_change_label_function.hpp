@@ -26,7 +26,7 @@ using bark::world::objects::AgentPtr;
 class LaneChangeLabelFunction : public BaseLabelFunction {
  public:
   using BaseLabelFunction::BaseLabelFunction;
-  LabelMap Evaluate(const world::ObservedWorld& observed_world) const override;
+  bool Evaluate(const world::ObservedWorld& observed_world, const AgentId& agent_id) const override;
 };
 
 }  // namespace evaluation

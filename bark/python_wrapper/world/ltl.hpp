@@ -15,14 +15,15 @@
 namespace py = pybind11;
 using namespace bark::world::evaluation;
 using namespace bark::world;
+using objects::AgentId;
 
 class PyBaseLabelFunction : public BaseLabelFunction {
  public:
   using BaseLabelFunction::BaseLabelFunction;
 
-  LabelMap Evaluate(const ObservedWorld& observed_world) const override {
-    PYBIND11_OVERLOAD_PURE(LabelMap, BaseLabelFunction, Evaluate,
-                           observed_world);
+  bool Evaluate(const ObservedWorld& observed_world, const AgentId& agent_id) const override {
+    PYBIND11_OVERLOAD_PURE(bool, BaseLabelFunction, Evaluate,
+                           observed_world, agent_id);
   }
 };
 

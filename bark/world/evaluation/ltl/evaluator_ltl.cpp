@@ -31,7 +31,8 @@ EvaluatorLTL::EvaluatorLTL(bark::world::objects::AgentId agent_id,
       agent_id_(agent_id),
       ltl_formula_str_(ltl_formula_str),
       monitor_(RuleMonitor::MakeRule(ltl_formula_str, -1.0, 0)),
-      label_functions_(label_functions) {
+      label_functions_(label_functions),
+      label_map_(nullptr, label_functions){
   if (!monitor_->IsAgentSpecific()) {
     rule_states_.emplace_back(monitor_->MakeRuleState()[0]);
   }
@@ -69,15 +70,15 @@ EvaluationReturn EvaluatorLTL::Evaluate(
     RemoveRuleStates(current_agents);
   }
 
-  // Obtain label values
-  LabelMap labels = EvaluateLabels(observed_world);
+  label_map_.Clear();
+  label_map_.SetWorld(&observed_world);
 
   unsigned int guarantee_violations = 0;
   float penalty = 0.0f;
   // Evaluate for every rule state
   for (auto& rs : rule_states_) {
     // Check for violations of safety properties
-    penalty = rs.GetAutomaton()->Evaluate(labels, rs);
+    penalty = rs.GetAutomaton()->Evaluate(&label_map_, rs);
     if (penalty != 0.0f) {
       safety_violations_++;
       VLOG(1) << "Rule \"" << ltl_formula_str_ << "\" violated in timestep "
@@ -95,15 +96,6 @@ EvaluationReturn EvaluatorLTL::Evaluate(
     }
   }
   return static_cast<int>(safety_violations_ + guarantee_violations);
-}
-LabelMap EvaluatorLTL::EvaluateLabels(
-    const ObservedWorld& observed_world) const {
-  LabelMap labels;
-  for (auto const& le : label_functions_) {
-    auto label_map = le->Evaluate(observed_world);
-    labels.insert(label_map.begin(), label_map.end());
-  }
-  return labels;
 }
 
 /// Return agent IDs for which rule states have been previously created

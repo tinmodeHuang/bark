@@ -8,7 +8,7 @@
 
 #include <string>
 
-#include "bark/world/evaluation/ltl/label_functions/multi_agent_label_function.hpp"
+#include "bark/world/evaluation/ltl/label_functions/base_label_function.hpp"
 #include "bark/world/objects/object.hpp"
 
 namespace bark {
@@ -17,7 +17,7 @@ namespace evaluation {
 
 // TRUE if relative speed between two agents is GREATER EQUAL than the
 // threshold
-class RelSpeedLabelFunction : public MultiAgentLabelFunction {
+class RelSpeedLabelFunction : public BaseLabelFunction{
  public:
   RelSpeedLabelFunction(const std::string& string, double rel_speed_thres);
   bool EvaluateAgent(const world::ObservedWorld& observed_world,

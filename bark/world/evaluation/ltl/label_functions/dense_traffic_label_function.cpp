@@ -22,8 +22,9 @@ DenseTrafficLabelFunction::DenseTrafficLabelFunction(
     : BaseLabelFunction(label_str),
       radius_(std::abs(radius)),
       num_agents_(num_agents) {}
-LabelMap DenseTrafficLabelFunction::Evaluate(
-  const world::ObservedWorld& observed_world) const {
+bool DenseTrafficLabelFunction::Evaluate(
+    const world::ObservedWorld& observed_world,
+    const AgentId& agent_id) const {
   int agent_count = 0;
   const auto& ego_pos = observed_world.GetEgoAgent()->GetCurrentPosition();
   // TODO(@cirrostratus1): Use rtree for performance
@@ -33,7 +34,7 @@ LabelMap DenseTrafficLabelFunction::Evaluate(
       ++agent_count;
     }
   }
-  return {{GetLabel(), agent_count >= num_agents_}};
+  return agent_count >= num_agents_;
 }
 }  // namespace evaluation
 }  // namespace world

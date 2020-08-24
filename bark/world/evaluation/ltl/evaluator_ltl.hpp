@@ -20,6 +20,7 @@
 #include "ltl/rule_state.h"
 #endif
 #include "bark/world/evaluation/ltl/label_functions/base_label_function.hpp"
+#include "bark/world/evaluation/ltl/label/evaluation_map.hpp"
 
 namespace bark {
 namespace world {
@@ -57,7 +58,7 @@ class EvaluatorLTL : public BaseEvaluator {
   RuleMonitor::RuleMonitorSPtr monitor_;
   std::set<AgentId> known_agents_;
   LabelFunctions label_functions_;
-  LabelMap EvaluateLabels(const ObservedWorld& observed_world) const;
+  EvaluationMap label_map_;
 #else
   EvaluatorLTL();
 #endif
