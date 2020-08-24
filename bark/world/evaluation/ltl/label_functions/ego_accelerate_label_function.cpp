@@ -21,8 +21,7 @@ EgoAccelerateLabelFunction::EgoAccelerateLabelFunction(
     const std::string& label_str, double acc_thres)
     : BaseLabelFunction(label_str), acc_thres_(acc_thres) {}
 
-LabelMap EgoAccelerateLabelFunction::Evaluate(
-    const world::ObservedWorld& observed_world) const {
+bool EgoAccelerateLabelFunction::Evaluate(const world::ObservedWorld& observed_world, const AgentId& agent_id) const  {
   bool accel = false;
   const auto ego = observed_world.GetEgoAgent();
   const auto& history = ego->GetStateInputHistory();
@@ -33,7 +32,7 @@ LabelMap EgoAccelerateLabelFunction::Evaluate(
     const float avg_accel = dv / dt;
     accel = avg_accel >= acc_thres_;
   }
-  return {{GetLabel(), accel}};
+  return accel;
 }
 }  // namespace evaluation
 }  // namespace world

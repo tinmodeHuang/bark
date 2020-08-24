@@ -25,14 +25,14 @@ class GenericEgoLabelFunction : public BaseLabelFunction {
   template <typename... Args>
   GenericEgoLabelFunction(const std::string& label_str, Args&&... args)
       : BaseLabelFunction(label_str), evaluator_(std::forward<Args>(args)...) {}
-  LabelMap Evaluate(const world::ObservedWorld& observed_world) const override {
+  bool Evaluate(const world::ObservedWorld& observed_world, const AgentId& agent_id) const override {
     T temp_eval(evaluator_);
     auto ego_agent = observed_world.GetEgoAgent();
     bool res = false;
     if (ego_agent) {
       res = boost::get<bool>(temp_eval.Evaluate(observed_world));
     }
-    return {{this->GetLabel(), res}};
+    return res;
   }
   T GetEvaluator() const { return evaluator_; }
 

@@ -16,6 +16,8 @@
 #include <vector>
 
 #include "bark/world/evaluation/ltl/label/label.h"
+#include "bark/world/evaluation/ltl/label_functions/base_label_function.hpp"
+#include "bark/world/objects/agent.hpp"
 #include "bark/world/objects/object.hpp"
 
 namespace bark {
@@ -24,20 +26,23 @@ namespace world {
 class ObservedWorld;
 
 namespace evaluation {
-using LabelMap = EvaluationMap;
+
+using objects::AgentPtr;
+using objects::AgentId;
 
 class BaseLabelFunction {
  public:
   explicit BaseLabelFunction(std::string label_str)
       : label_str_(std::move(label_str)) {}
-  virtual LabelMap Evaluate(
-      const world::ObservedWorld& observed_world) const = 0;
+  virtual bool EvaluateAgent(const ObservedWorld& observed_world,
+                             const AgentPtr& other_agent) const {return false;};
+  virtual bool Evaluate(
+      const world::ObservedWorld& observed_world, const AgentId& agent_id) const;
   const std::string& GetLabelStr() const { return label_str_; }
   Label GetLabel(const objects::AgentId agent_id) const {
     return Label(label_str_, agent_id);
   }
   Label GetLabel() const { return Label(label_str_); }
-
  private:
   std::string label_str_;
 };

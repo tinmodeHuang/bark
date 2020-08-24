@@ -63,8 +63,6 @@ class LabelHash {
   }
 };
 
-typedef std::unordered_map<Label, bool, LabelHash> EvaluationMap;
-
 }  // namespace evaluation
 }  // namespace world
 }  // namespace bark

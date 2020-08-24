@@ -32,26 +32,22 @@ TEST(label_test, right_of) {
   auto evaluator = LabelFunctionPtr(new RightOfLabelFunction("r_v"));
   auto world = MakeTestWorldHighway();
   auto observed_worlds = world->Observe({1, 4});
-  auto labels1 = evaluator->Evaluate(observed_worlds[0]);
-  Label label1("r_v", 4);
-  EXPECT_FALSE(labels1[label1]);
+  auto labels1 = evaluator->Evaluate(observed_worlds[0], 4);
+  EXPECT_FALSE(labels1);
 
-  auto labels2 = evaluator->Evaluate(observed_worlds[1]);
-  Label label2("r_v", 1);
-  EXPECT_TRUE(labels2[label2]);
+  auto labels2 = evaluator->Evaluate(observed_worlds[1], 1);
+  EXPECT_TRUE(labels2);
 }
 
 TEST(label_test, left_of) {
   auto evaluator = LabelFunctionPtr(new LeftOfLabelFunction("l_v"));
   auto world = MakeTestWorldHighway();
   auto observed_worlds = world->Observe({1, 4});
-  auto labels1 = evaluator->Evaluate(observed_worlds[0]);
-  Label label1("l_v", 4);
-  EXPECT_TRUE(labels1[label1]);
+  auto labels1 = evaluator->Evaluate(observed_worlds[0], 4);
+  EXPECT_TRUE(labels1);
 
-  auto labels2 = evaluator->Evaluate(observed_worlds[1]);
-  Label label2("l_v", 1);
-  EXPECT_FALSE(labels2[label2]);
+  auto labels2 = evaluator->Evaluate(observed_worlds[1], 1);
+  EXPECT_FALSE(labels2);
 }
 
 TEST(label_test, safe_distance) {
@@ -64,29 +60,28 @@ TEST(label_test, safe_distance) {
 
   auto evaluator = LabelFunctionPtr(
       new SafeDistanceLabelFunction("safe_distance", false, delta, a_e, a_o));
-  auto label = evaluator->GetLabel();
   double stop_dist = v_0 * delta + v_0 * v_0 / (2.0 * -a_e);
 
   // Case 1
   assert(stop_dist > 1.0);
   auto world = make_test_world(1, stop_dist - 1.0, v_0, dv);
   auto observed_world = world->Observe({ego_id})[0];
-  auto labels = evaluator->Evaluate(observed_world);
-  EXPECT_TRUE(labels[label]);
+  auto labels = evaluator->Evaluate(observed_world, 2);
+  EXPECT_TRUE(labels);
 
   // Case 2
   double dist = 5.0;
   auto world2 = make_test_world(1, dist, v_0, dv);
   auto observed_world2 = world2->Observe({ego_id})[0];
-  auto labels2 = evaluator->Evaluate(observed_world2);
-  EXPECT_FALSE(labels2[label]);
+  auto labels2 = evaluator->Evaluate(observed_world2, 2);
+  EXPECT_FALSE(labels2);
 
   // Case 3
   dist = 2.0;
   auto world3 = make_test_world(1, dist, v_0, dv);
   auto observed_world3 = world3->Observe({ego_id})[0];
-  auto labels3 = evaluator->Evaluate(observed_world3);
-  EXPECT_FALSE(labels3[label]);
+  auto labels3 = evaluator->Evaluate(observed_world3, 2);
+  EXPECT_FALSE(labels3);
 
   // Case 4
   delta = 0.5;
@@ -95,20 +90,19 @@ TEST(label_test, safe_distance) {
       new SafeDistanceLabelFunction("safe_distance", false, delta, a_e, a_o));
   auto world4 = make_test_world(1, dist, v_0, dv);
   auto observed_world4 = world4->Observe({ego_id})[0];
-  auto labels4 = evaluator->Evaluate(observed_world4);
-  EXPECT_TRUE(labels4[label]);
+  auto labels4 = evaluator->Evaluate(observed_world4, 2);
+  EXPECT_TRUE(labels4);
 
   // Case 5
   dist = 6.0;
   auto world5 = make_test_world(1, dist, v_0, dv);
   auto observed_world5 = world5->Observe({ego_id})[0];
-  auto labels5 = evaluator->Evaluate(observed_world5);
-  EXPECT_TRUE(labels5[label]);
+  auto labels5 = evaluator->Evaluate(observed_world5, 2);
+  EXPECT_TRUE(labels5);
 }
 
 TEST(label_test, lane_change_right) {
   auto evaluator = LabelFunctionPtr(new LaneChangeLabelFunction("lane_change"));
-  auto label = evaluator->GetLabel();
   auto world = MakeTestWorldHighway();
   auto params = std::make_shared<SetterParams>();
   AgentId id = 1;
@@ -124,12 +118,12 @@ TEST(label_test, lane_change_right) {
   auto current_lc =
       agent_1->GetRoadCorridor()->GetCurrentLaneCorridor(current_pos);
   auto observed_world = world->Observe({id})[0];
-  auto labels = evaluator->Evaluate(observed_world);
-  ASSERT_FALSE(labels[label]);
+  auto labels = evaluator->Evaluate(observed_world, 0);
+  ASSERT_FALSE(labels);
   while (right_lc != current_lc) {
     observed_world = world->Observe({id})[0];
-    auto labels = evaluator->Evaluate(observed_world);
-    ASSERT_FALSE(labels[label]);
+    labels = evaluator->Evaluate(observed_world, 0);
+    ASSERT_FALSE(labels);
     world->Step(0.5);
     agent_1 = world->GetAgent(id);
     current_pos = agent_1->GetCurrentPosition();
@@ -137,13 +131,12 @@ TEST(label_test, lane_change_right) {
         agent_1->GetRoadCorridor()->GetCurrentLaneCorridor(current_pos);
   }
   observed_world = world->Observe({id})[0];
-  labels = evaluator->Evaluate(observed_world);
-  EXPECT_TRUE(labels[label]);
+  labels = evaluator->Evaluate(observed_world, 0);
+  EXPECT_TRUE(labels);
 }
 
 TEST(label_test, lane_change_left) {
   auto evaluator = LabelFunctionPtr(new LaneChangeLabelFunction("lane_change"));
-  auto label = evaluator->GetLabel();
   auto world = MakeTestWorldHighway();
   auto params = std::make_shared<SetterParams>();
   AgentId id = 4;
@@ -159,12 +152,12 @@ TEST(label_test, lane_change_left) {
   auto current_lc =
       agent_4->GetRoadCorridor()->GetCurrentLaneCorridor(current_pos);
   auto observed_world = world->Observe({id})[0];
-  auto labels = evaluator->Evaluate(observed_world);
-  ASSERT_FALSE(labels[label]);
+  auto labels = evaluator->Evaluate(observed_world, 0);
+  ASSERT_FALSE(labels);
   while (left_lc != current_lc) {
     observed_world = world->Observe({id})[0];
-    auto labels = evaluator->Evaluate(observed_world);
-    ASSERT_FALSE(labels[label]);
+    labels = evaluator->Evaluate(observed_world, 0);
+    ASSERT_FALSE(labels);
     world->Step(0.5);
     agent_4 = world->GetAgent(id);
     current_pos = agent_4->GetCurrentPosition();
@@ -172,8 +165,8 @@ TEST(label_test, lane_change_left) {
         agent_4->GetRoadCorridor()->GetCurrentLaneCorridor(current_pos);
   }
   observed_world = world->Observe({id})[0];
-  labels = evaluator->Evaluate(observed_world);
-  EXPECT_TRUE(labels[label]);
+  labels = evaluator->Evaluate(observed_world, 0);
+  EXPECT_TRUE(labels);
 }
 
 TEST(label_test, rel_speed_gt) {
@@ -181,30 +174,26 @@ TEST(label_test, rel_speed_gt) {
       LabelFunctionPtr(new RelSpeedLabelFunction("rel_speed_gt", 10.0));
   auto world = make_test_world(1, 20.0, 20.0, 15.0);
   auto observed_worlds = world->Observe({1});
-  auto labels1 = evaluator->Evaluate(observed_worlds[0]);
-  auto label1 = evaluator->GetLabel(2);
-  EXPECT_TRUE(labels1[label1]);
+  auto labels1 = evaluator->Evaluate(observed_worlds[0], 2);
+  EXPECT_TRUE(labels1);
 
   auto world2 = make_test_world(1, 20.0, 20.0, 5.0);
   auto observed_worlds2 = world2->Observe({1});
-  auto labels2 = evaluator->Evaluate(observed_worlds2[0]);
-  auto label2 = evaluator->GetLabel(2);
-  EXPECT_FALSE(labels2[label2]);
+  auto labels2 = evaluator->Evaluate(observed_worlds2[0], 2);
+  EXPECT_FALSE(labels2);
 }
 
 TEST(label_test, agent_near) {
   auto evaluator = LabelFunctionPtr(new AgentNearLabelFunction("near", 10.0));
   auto world = make_test_world(1, 5.0, 20.0, 0.0);
   auto observed_worlds = world->Observe({1});
-  auto labels1 = evaluator->Evaluate(observed_worlds[0]);
-  auto label1 = evaluator->GetLabel(2);
-  EXPECT_TRUE(labels1[label1]);
+  auto labels1 = evaluator->Evaluate(observed_worlds[0], 2);
+  EXPECT_TRUE(labels1);
 
   auto world2 = make_test_world(1, 15.0, 20.0, 0.0);
   auto observed_worlds2 = world2->Observe({1});
-  auto labels2 = evaluator->Evaluate(observed_worlds2[0]);
-  auto label2 = evaluator->GetLabel(2);
-  EXPECT_FALSE(labels2[label2]);
+  auto labels2 = evaluator->Evaluate(observed_worlds2[0], 2);
+  EXPECT_FALSE(labels2);
 }
 
 int main(int argc, char** argv) {

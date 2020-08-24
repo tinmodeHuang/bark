@@ -18,8 +18,7 @@ using bark::geometry::Collide;
 using bark::models::dynamic::State;
 using bark::models::dynamic::StateDefinition;
 
-LabelMap LaneChangeLabelFunction::Evaluate(
-    const world::ObservedWorld& observed_world) const {
+bool LaneChangeLabelFunction::Evaluate(const world::ObservedWorld& observed_world, const AgentId& agent_id) const  {
   bool lane_change = false;
   const auto lc = observed_world.GetLaneCorridor();
   const auto ego = observed_world.GetEgoAgent();
@@ -34,7 +33,7 @@ LabelMap LaneChangeLabelFunction::Evaluate(
     lane_change = Collide(line, lc->GetLeftBoundary());
     lane_change = lane_change || Collide(line, lc->GetRightBoundary());
   }
-  return {{GetLabel(), lane_change}};
+  return lane_change;
 }
 }  // namespace evaluation
 }  // namespace world

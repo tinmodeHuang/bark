@@ -16,7 +16,7 @@ using bark::geometry::Distance;
 bark::world::evaluation::AgentAtLaneEndLabelFunction::
     AgentAtLaneEndLabelFunction(const std::string& string,
                                 const double distance_thres)
-    : MultiAgentLabelFunction(string), distance_thres_(distance_thres) {
+    : BaseLabelFunction(string), distance_thres_(distance_thres) {
   assert(distance_thres_ >= 0.0);
 }
 

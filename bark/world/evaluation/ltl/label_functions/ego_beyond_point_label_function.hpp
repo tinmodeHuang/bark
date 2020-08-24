@@ -26,7 +26,7 @@ class EgoBeyondPointLabelFunction : public BaseLabelFunction {
  public:
   EgoBeyondPointLabelFunction(const std::string& label_str,
                               const Point2d& beyond_point);
-  LabelMap Evaluate(const world::ObservedWorld& observed_world) const override;
+  bool Evaluate(const world::ObservedWorld& observed_world, const AgentId& agent_id) const override;
   const Point2d& GetBeyondPoint() const;
 
  private:

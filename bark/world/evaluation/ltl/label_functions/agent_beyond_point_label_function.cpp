@@ -12,7 +12,7 @@
 bark::world::evaluation::AgentBeyondPointLabelFunction::
     AgentBeyondPointLabelFunction(const std::string& string,
                                   bark::geometry::Point2d beyond_point)
-    : MultiAgentLabelFunction(string), beyond_point_(beyond_point) {}
+    : BaseLabelFunction(string), beyond_point_(beyond_point) {}
 bool bark::world::evaluation::AgentBeyondPointLabelFunction::EvaluateAgent(
     const bark::world::ObservedWorld& observed_world,
     const bark::world::AgentPtr& other_agent) const {

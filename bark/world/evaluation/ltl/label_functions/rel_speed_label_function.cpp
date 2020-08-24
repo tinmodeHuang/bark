@@ -14,7 +14,7 @@ using bark::models::dynamic::StateDefinition;
 
 bark::world::evaluation::RelSpeedLabelFunction::RelSpeedLabelFunction(
     const std::string& string, const double rel_speed_thres)
-    : MultiAgentLabelFunction(string), rel_speed_thres_(rel_speed_thres) {}
+    : BaseLabelFunction(string), rel_speed_thres_(rel_speed_thres) {}
 
 bool bark::world::evaluation::RelSpeedLabelFunction::EvaluateAgent(
     const bark::world::ObservedWorld& observed_world,

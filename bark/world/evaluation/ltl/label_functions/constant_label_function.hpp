@@ -22,8 +22,8 @@ class ConstantLabelFunction : public BaseLabelFunction {
  public:
   ConstantLabelFunction(const std::string& label_str)
       : BaseLabelFunction(label_str), value_(true) {}
-  LabelMap Evaluate(const world::ObservedWorld& observed_world) const override {
-    return {{Label(GetLabelStr()), value_}};
+  bool Evaluate(const world::ObservedWorld& observed_world, const AgentId& agent_id) const override {
+    return value_;
   }
   bool GetValue() const { return value_; }
   void SetValue(bool value) { value_ = value; }
