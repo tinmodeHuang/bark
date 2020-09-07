@@ -17,14 +17,15 @@ py_binary(
           "@benchmark_database//load:benchmark_database",
           "@benchmark_database//serialization:database_serializer",
           "//bark/benchmark:benchmark_runner",
+          "//bark/benchmark:benchmark_runner_mp",
           "//bark/benchmark:benchmark_analyzer",
           "//bark/runtime/scenario/scenario_generation:scenario_generation",
           "//bark/runtime:runtime"],
   data = [":notebooks_folder",
           "//bark:generate_core",
           "//bark/runtime/tests:xodr_data",
+          "//examples/mcts_rl/database:database",
           "//examples:params",
-          "@benchmark_database//data/database1:database1",
           ]
 )
 
@@ -42,6 +43,6 @@ py_test(
   data = [":notebooks_folder",
           "//bark:generate_core",
           "//bark/runtime/tests:xodr_data",
-          "@benchmark_database//data/database1:database1",
+          "//examples/mcts_rl/database:database",
           ]
 )
