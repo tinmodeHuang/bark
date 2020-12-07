@@ -179,7 +179,7 @@ void MapInterface::CalculateLaneCorridors(RoadCorridorPtr& road_corridor,
           lane_corridor->GetCenterLine(), next_lane->GetCenterLine());
       lane_corridor->SetCenterLine(new_center);
       lane_corridor->SetFineCenterLine(new_center);
-      
+
       Line new_left = bark::geometry::ConcatenateLinestring(
           lane_corridor->GetLeftBoundary(), next_lane->GetLeftBoundary().line_);
       lane_corridor->SetLeftBoundary(new_left);
@@ -209,7 +209,8 @@ void MapInterface::CalculateLaneCorridors(RoadCorridorPtr& road_corridor,
     Line simplf_center = Simplify(lane_corridor->GetCenterLine(), max_dist);
     lane_corridor->SetCenterLine(simplf_center);
 
-    Line simplf_fine_center = Simplify(lane_corridor->GetFineCenterLine(), 0.001);
+    Line simplf_fine_center =
+        Simplify(lane_corridor->GetFineCenterLine(), 0.001);
     lane_corridor->SetFineCenterLine(simplf_fine_center);
 
     Line simplf_right = Simplify(lane_corridor->GetRightBoundary(), max_dist);
@@ -244,6 +245,16 @@ void MapInterface::CalculateLaneCorridors(RoadCorridorPtr& road_corridor,
     }
 
     lane_corridor->SetMergedPolygon(*polygon);
+  }
+
+  for (auto& lane_corridor : road_corridor->GetUniqueLaneCorridors()) {
+    const double max_dist = 0.4;
+    Line simplf_center = Simplify(lane_corridor->GetCenterLine(), max_dist);
+    lane_corridor->SetCenterLine(simplf_center);
+
+    Line simplf_fine_center =
+        Simplify(lane_corridor->GetFineCenterLine(), 0.001);
+    lane_corridor->SetFineCenterLine(simplf_fine_center);
   }
 }
 
