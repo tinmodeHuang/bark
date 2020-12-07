@@ -287,6 +287,10 @@ class BaseViewer(Viewer):
         if self._draw_aerial_image:
           self.drawMapAerialImage()
 
+        observed_world = world.Observe([eval_agent_ids[0]])
+        lane_corridor = observed_world[0].lane_corridor
+        self.drawLaneCorridor(lane_corridor)
+
         # draw agent goals
         for agent_id, agent in world.agents.items():
             if eval_agent_ids and self.draw_eval_goals and agent.goal_definition and \
@@ -408,6 +412,20 @@ class BaseViewer(Viewer):
     def drawLaneCorridor(self, lane_corridor, color=None):
         if color is None:
             color = "blue"
+
+        lane = lane_corridor.center_line
+        oldpt = lane.ToArray()[0]
+        s = 0
+        for pt in lane.ToArray()[1:]:
+          x = pt[0] - oldpt[0]
+          y = pt[1] - oldpt[1]
+          oldpt = pt
+          ds = math.sqrt(pow(x,2) + pow(y,2))
+          t_s = GetTangentAngleAtS(lane_corridor.center_line, s)
+          s = s + ds
+          t_a = np.arctan2(y,x)
+          print("theta s, a, ds = ", t_s, t_a, ds)
+
         self.drawPolygon2d(lane_corridor.polygon, color=color,
                            facecolor=color, alpha=.3, zorder=2)
 
