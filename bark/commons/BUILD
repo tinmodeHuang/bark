@@ -30,13 +30,8 @@ cc_library(
         "//bark/commons/params:include",
         "//bark/commons/util:include",
         "//bark/commons/distribution:include",
-        "@boost//:system",
-        "@boost//:smart_ptr",
-        "@boost//:move",
-        "@boost//:type_traits",
-#        "@boost//:stacktrace",
-        "@boost//:math",
-        "@com_github_google_glog//:glog"
+        "@boost",
+        "@glog"
     ],
     visibility = ["//visibility:public"],
 )
