@@ -28,7 +28,7 @@ typedef std::pair<std::string, Parameter> ParamPair;
 
 inline std::ostream& operator<<(std::ostream& os, const Parameter& p) {
   return boost::apply_visitor(
-      [&os](const auto& p) -> std::ostream& { return os << p; }, p);
+      [&os](const Parameter& p) -> std::ostream& { return os << p; }, p);
 }
 
 typedef std::vector<ParamPair> CondensedParamList;
