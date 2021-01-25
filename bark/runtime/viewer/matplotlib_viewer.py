@@ -137,7 +137,6 @@ class MPViewer(BaseViewer):
       return width, height
 
     def drawWorld(self, world, eval_agent_ids=None, filename=None, scenario_idx=None, debug_text=True, axes_visible=False):
-        self.clear()
         if not axes_visible:
             self.axes.set_axis_off()
         super(MPViewer, self).drawWorld(world, eval_agent_ids, filename, scenario_idx, debug_text)

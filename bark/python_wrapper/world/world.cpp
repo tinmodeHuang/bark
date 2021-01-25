@@ -34,6 +34,13 @@ using bark::world::World;
 using bark::world::WorldPtr;
 
 void python_world(py::module m) {
+  py::class_<
+    FrontRearAgents,
+    std::shared_ptr<FrontRearAgents>>(m, "FrontRearAgents")
+    .def(py::init<>())
+    .def_readwrite("front", &FrontRearAgents::front)
+    .def_readwrite("rear", &FrontRearAgents::rear);
+
   py::class_<World, std::shared_ptr<World>>(m, "World")
       .def(py::init<ParamsPtr>())
       .def("Step", &World::Step)
@@ -60,6 +67,7 @@ void python_world(py::module m) {
       .def_property("map", &World::GetMap, &World::SetMap)
       .def("Copy", &World::Clone)
       .def("GetWorldAtTime", &World::GetWorldAtTime)
+      .def("GetAgentFrontRear", &World::GetAgentFrontRear)
       // .def("FillWorldFromCarla",&World::FillWorldFromCarla)
       // .def("PlanAgents",&World::PlanSpecificAgents)
       .def("__repr__", [](const World& a) { return "bark.core.world.World"; });

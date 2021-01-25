@@ -153,7 +153,9 @@ class World : public commons::BaseType {
   FrontRearAgents GetAgentFrontRearForId(const AgentId& agent_id,
                                          const LaneCorridorPtr& lane_corridor,
                                          double frac_lateral_offset) const;
-
+  FrontRearAgents GetAgentFrontRear(const geometry::Point2d& ego_position,
+                                    const LaneCorridorPtr& lane_corridor,
+                                    double frac_lateral_offset) const;
   //! Setter
   void SetMap(const world::map::MapInterfacePtr& map) { map_ = map; }
 
