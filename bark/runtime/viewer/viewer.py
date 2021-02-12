@@ -50,7 +50,7 @@ class BaseViewer(Viewer):
         self.draw_route = params["Visualization"]["Agents"]["DrawRoute",
                                                             "Draw Route of each agent", False]
         self.draw_agent_id = params["Visualization"]["Agents"]["DrawAgentId",
-                                                               "Draw id of each agent", True]
+                                                               "Draw id of each agent", False]
         self.draw_orientation_arrow = params["Visualization"]["Agents"]["DrawOrientationArrow",
                                                                "Draw Orientation of Arrow", False]
         self.draw_behavior_plan_eval_agent = params["Visualization"]["Agents"]["DrawBehaviorPlanEvalAgent", "Draw behavior plan of evalauted agent", False]
@@ -286,7 +286,7 @@ class BaseViewer(Viewer):
                         evaluator_type, k.label_str, k.agent_id, v)
         self.drawText(position=(0.7, 0.9), text=str)
 
-    def drawWorld(self, world, eval_agent_ids=None, filename=None, scenario_idx=None, debug_text=True):
+    def drawWorld(self, world, eval_agent_ids=None, filename=None, scenario_idx=None, debug_text=False):
         # self.clear()
         self._update_world_view_range(world, eval_agent_ids)
         if world.map:
