@@ -82,6 +82,9 @@ void python_geometry(py::module m) {
   m.def("GetPointAtS", &bark::geometry::GetPointAtS,
         "get the Point2d at position s of the line");
 
+  m.def("SignedAngleDiff", &bark::geometry::SignedAngleDiff,
+        "Signed angle diff");
+
   m.def("GetTangentAngleAtS", &bark::geometry::GetTangentAngleAtS,
         "get the angle at position s of the line");
 
@@ -177,6 +180,8 @@ void python_geometry(py::module m) {
            "Create polygon with center point and point list")
       .def(py::init<Pose, const Line&>(),
            "Create polygon with center point and line enclosing polygon")
+      .def(py::init<const Line&, const Line&>(),
+           "Create polygon with left and right line")
       .def("AddPoint", &Polygon::AddPoint, "add a point")
       .def("AddPoint",
            [](Polygon& polygon, py::list list) {
@@ -227,6 +232,8 @@ void python_geometry(py::module m) {
             return p;
           }));
   m.def("CalculateBoundingBoxPolygon", &bark::geometry::CalculateBoundingBoxPolygon, "caclulate bounding box");
+  m.def("Intersection", &bark::geometry::Intersection<Polygon, Line>, "return intersection points");
+  m.def("Intersection", &bark::geometry::Intersection<Line, Line>, "return intersection points");
 
   python_standard_shapes(
       m.def_submodule("standard_shapes",

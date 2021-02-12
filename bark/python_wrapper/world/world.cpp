@@ -68,6 +68,7 @@ void python_world(py::module m) {
       .def("Copy", &World::Clone)
       .def("GetWorldAtTime", &World::GetWorldAtTime)
       .def("GetAgentFrontRear", &World::GetAgentFrontRear)
+      .def("GetAgentFrontRearForId", &World::GetAgentFrontRearForId)
       // .def("FillWorldFromCarla",&World::FillWorldFromCarla)
       // .def("PlanAgents",&World::PlanSpecificAgents)
       .def("__repr__", [](const World& a) { return "bark.core.world.World"; });

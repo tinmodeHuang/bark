@@ -70,6 +70,7 @@ void python_behavior(py::module m) {
   py::class_<BehaviorIDMClassic, BehaviorModel, shared_ptr<BehaviorIDMClassic>>(
       m, "BehaviorIDMClassic", py::multiple_inheritance())
       .def(py::init<const bark::commons::ParamsPtr&>())
+      .def("GetDesiredTimeHeadway", &BehaviorIDMClassic::GetDesiredTimeHeadway)
       .def("__repr__",
            [](const BehaviorIDMClassic& m) {
              return "bark.behavior.BehaviorIDMClassic";
