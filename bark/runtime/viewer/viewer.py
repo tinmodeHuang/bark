@@ -303,7 +303,7 @@ class BaseViewer(Viewer):
                 color_face = self.color_eval_agents_face
                 alpha = self.alpha_eval_agent
                 self.drawGoalDefinition(
-                    agent.goal_definition, color_line, alpha, color_face)
+                    agent.goal_definition, self.eval_goal_color, alpha, self.eval_goal_color)
 
         num_agents = len(world.agents.items())
         for i, (agent_id, agent) in enumerate(world.agents.items()):

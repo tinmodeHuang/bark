@@ -23,6 +23,7 @@ class VideoRenderer(BaseViewer):
     def __init__(self, renderer, world_step_time, render_intermediate_steps=None , params=None, video_name=None, fig_path=None, clear_figures=True, **kwargs):
         super(VideoRenderer, self).__init__(params=params)
         self.renderer = renderer
+        self.axes = renderer.axes
         self.world_step_time = world_step_time
         self.render_intermediate_steps = render_intermediate_steps
 
