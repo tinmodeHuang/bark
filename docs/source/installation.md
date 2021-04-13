@@ -8,7 +8,7 @@ This section describes the prerequisites and installation-steps of BARK.
 
 * Bazel > 3(requires Java)
 * Python3.7 (`sudo apt-get install python3.7 python3.7-dev python3.7-tk`)
-* Virtual Env (`pip3 install virtualenv==16.7.8`) (note that the newest version does not seem to link the Python.h)
+* Virtual Env (`sudo pip3 install virtualenv==16.7.8`) (note that the newest version does not seem to link the Python.h)
 * gcc7 (needs to be set as the default compiler)
 * Visual Studio Code
 
@@ -29,10 +29,10 @@ We recommend to use an anaconda environment instead of your system's python inst
 4. Install Virtual Env: `pip3 install virtualenv==16.7.8`
 5. Use `git clone https://github.com/bark-simulator/bark.git` or download the repository from this page.
 6. Change directory to bark
-7. Run `bash install.sh`: creates a virtual environment (located in python/venv) and installs all python packages
-8. Run `source dev_into.sh`: activates the virtual environment (make sure to run this before bazel)
-9. Use `bazel test //...` to validate that BARK is working.
-10. Finally, try one of the examples provided in BARK by running `bazel run //bark/examples:merging`.
+8. Run `bash install.sh`: creates a virtual environment (located in python/venv) and installs all python packages(you may need to install testresources with ```sudo apt install python3-testresources```)
+9. Run `source dev_into.sh`: activates the virtual environment (make sure to run this before bazel)
+10. Use `bazel test //...` to validate that BARK is working.
+11. Finally, try one of the examples provided in BARK by running `bazel run //bark/examples:merging`.
 
 
 ## Setup on MacOS
